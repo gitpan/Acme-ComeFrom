@@ -1,0 +1,12 @@
+____________________________________________________________________________
+[  2402] By: autrijus                              on 2001/11/23  12:01:54
+        Log: * 0.02: fix prerequisites.
+	   ! ComeFrom.pm Makefile.PL
+____________________________________________________________________________
+[  2401] By: autrijus                              on 2001/11/23  11:57:48
+        Log: * changes.
+	   + Changes
+____________________________________________________________________________
+[  2400] By: autrijus                              on 2001/11/23  11:55:52
+        Log: * Acme::ComeFrom v0.01, the tour de force.
+	   + ComeFrom.pm MANIFEST Makefile.PL README test.pl
