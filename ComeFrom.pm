@@ -1,8 +1,8 @@
 # $File: //member/autrijus/Acme-ComeFrom/ComeFrom.pm $ $Author: autrijus $
-# $Revision: #2 $ $Change: 2402 $ $DateTime: 2001/11/23 12:01:54 $
+# $Revision: #4 $ $Change: 2406 $ $DateTime: 2001/11/23 12:11:14 $
 
 package Acme::ComeFrom;
-$Acme::ComeFrom::VERSION = '0.02';
+$Acme::ComeFrom::VERSION = '0.03';
 
 use strict;
 use Filter::Simple 0.70;
@@ -120,7 +120,7 @@ FILTER_ONLY code => sub {
 
     while (my ($k, $v) = each %subs) {
 	my $chunk = makechunk($v);
-	require Hook::LexWrap 0.20;
+	require Hook::LexWrap;
 	$code .= "Hook::LexWrap::wrap($k, post => sub { $chunk });";
     }
 
