@@ -1,8 +1,8 @@
-# $File: //member/autrijus/Acme-ComeFrom/ComeFrom.pm $ $Author: autrijus $
-# $Revision: #9 $ $Change: 3586 $ $DateTime: 2002/03/29 13:55:17 $
+# $File: //member/autrijus/Acme-ComeFrom/lib/Acme/ComeFrom.pm $ $Author: autrijus $
+# $Revision: #2 $ $Change: 8743 $ $DateTime: 2003/11/08 06:20:52 $
 
 package Acme::ComeFrom;
-$Acme::ComeFrom::VERSION = '0.06';
+$Acme::ComeFrom::VERSION = '0.07';
 
 use strict;
 use vars qw/$CacheEXPR/;
@@ -14,8 +14,8 @@ Acme::ComeFrom - Parallel goto-in-reverse
 
 =head1 VERSION
 
-This document describes version 0.06 of Acme::ComeFrom, released
-March 30, 2002.
+This document describes version 0.07 of Acme::ComeFrom, released
+November 8, 2002.
 
 =head1 SYNOPSIS
 
@@ -209,7 +209,7 @@ Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2001 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
+Copyright 2001, 2002, 2003 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
 
 This program is free software; you can redistribute it and/or 
 modify it under the same terms as Perl itself.

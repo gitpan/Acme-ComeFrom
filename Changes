@@ -1,95 +1,17 @@
 ____________________________________________________________________________
-[  3587] By: autrijus                              on 2002/03/29  13:59:48
-        Log: * remedy.
-	   ! t/1-basic.t
+[  8742] By: autrijus                              on 2003/11/08  06:18:43
+        Log: * This be 0.07.
+             * Modernise distribution format.
+	   + t/0-signature.t
+	  +> lib/Acme/ComeFrom.pm
+	   - ComeFrom.pm
+	   ! MANIFEST Makefile.PL README t/1-basic.t
+	   ! t/2-cached.t
 ____________________________________________________________________________
-[  3586] By: autrijus                              on 2002/03/29  13:55:17
-        Log: * This be 0.06.
-	   ! ComeFrom.pm
+[  8513] By: autrijus                              on 2003/10/20  23:44:16
+        Log: * switch to use inc::Module::Install. 
+	   ! MANIFEST Makefile.PL
 ____________________________________________________________________________
-[  3385] By: autrijus                              on 2002/03/08  16:39:46
-        Log: * oops, test number wrong.
-	   ! t/1-basic.t
-____________________________________________________________________________
-[  2472] By: autrijus                              on 2001/11/29  13:42:58
-        Log: * very minor nits.
-	   ! ComeFrom.pm
-____________________________________________________________________________
-[  2434] By: autrijus                              on 2001/11/26  11:09:44
-        Log: * fix tests in manifest.
-	   ! MANIFEST
-____________________________________________________________________________
-[  2433] By: autrijus                              on 2001/11/26  11:07:41
-        Log: * changes.
-	   ! Changes
-____________________________________________________________________________
-[  2432] By: autrijus                              on 2001/11/26  11:06:25
-        Log: * This be ComeFrom.pm 0.05.
-             * more pod nits.
-	   ! ComeFrom.pm
-____________________________________________________________________________
-[  2431] By: autrijus                              on 2001/11/26  10:59:24
-        Log: * pointless test nits.
-	   ! t/1-basic.t t/2-cached.t
-____________________________________________________________________________
-[  2414] By: autrijus                              on 2001/11/24  05:53:02
-        Log: * rename the test.
-	  +> t/1-basic.t
-	   - t/ComeFrom.t
-____________________________________________________________________________
-[  2413] By: autrijus                              on 2001/11/24  05:51:45
-        Log: * per Ton Hospel's request, revert the cached EXPR feature.
-             * add $Acme::ComeFrom::CacheEXPR flag to specify old
-	     behaviour.
-             * add corresponding test.
-	   + t/2-cached.t
-	   ! ComeFrom.pm t/ComeFrom.t
-____________________________________________________________________________
-[  2412] By: autrijus                              on 2001/11/24  03:08:06
-        Log: * changes.
-	   ! Changes
-____________________________________________________________________________
-[  2411] By: autrijus                              on 2001/11/24  03:06:03
-        Log: * 0.04: corrected most of the pidgin POD, and s/goto/comefrom/
-	     nits
-             * Keeps better track to multiple importing packages
-             * Skips over its own labels without outlawing U_nderscores:
-             * uses Test::More for testing
-             * added complete test cases.
-	   ! ComeFrom.pm Makefile.PL README t/ComeFrom.t
-____________________________________________________________________________
-[  2407] By: autrijus                              on 2001/11/23  12:23:22
-        Log: * thanks to schwern, ditched test.pl
-             * (see
-	     http://archive.develooper.com/perl-qa@perl.org/msg00783.html)
-	  +> t/ComeFrom.t
-	   - test.pl
-	   ! MANIFEST
-____________________________________________________________________________
-[  2406] By: autrijus                              on 2001/11/23  12:11:14
-        Log: * oops.
-	   ! ComeFrom.pm
-____________________________________________________________________________
-[  2405] By: autrijus                              on 2001/11/23  12:10:47
-        Log: changes.
-	   ! Changes
-____________________________________________________________________________
-[  2404] By: autrijus                              on 2001/11/23  12:09:44
-        Log: * 0.03, the CPAN version. 0.02 doesn't even compile.
-	   ! ComeFrom.pm
-____________________________________________________________________________
-[  2403] By: autrijus                              on 2001/11/23  12:02:45
-        Log: * changes.
-	   ! Changes
-____________________________________________________________________________
-[  2402] By: autrijus                              on 2001/11/23  12:01:54
-        Log: * 0.02: fix prerequisites.
-	   ! ComeFrom.pm Makefile.PL
-____________________________________________________________________________
-[  2401] By: autrijus                              on 2001/11/23  11:57:48
-        Log: * changes.
-	   + Changes
-____________________________________________________________________________
-[  2400] By: autrijus                              on 2001/11/23  11:55:52
-        Log: * Acme::ComeFrom v0.01, the tour de force.
-	   + ComeFrom.pm MANIFEST Makefile.PL README test.pl
+[  7252] By: autrijus                              on 2003/07/30  06:48:00
+        Log: * switch to Module::Install
+	   ! MANIFEST Makefile.PL

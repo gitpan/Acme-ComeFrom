@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # $File: //member/autrijus/Acme-ComeFrom/t/2-cached.t $ $Author: autrijus $
-# $Revision: #2 $ $Change: 2431 $ $DateTime: 2001/11/26 10:59:24 $
+# $Revision: #1 $ $Change: 1 $ $DateTime: 2002/06/11 15:35:12 $
 
 use strict;
 use Test::More tests => 2;

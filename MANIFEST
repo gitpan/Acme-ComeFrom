@@ -1,7 +1,17 @@
 Changes
-MANIFEST
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Include.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Test/Builder.pm
+inc/Test/More.pm
+lib/Acme/ComeFrom.pm
 Makefile.PL
-ComeFrom.pm
+MANIFEST			This list of files
+META.yml
 README
+SIGNATURE			Public-key signature (added by MakeMaker)
+t/0-signature.t
 t/1-basic.t
 t/2-cached.t

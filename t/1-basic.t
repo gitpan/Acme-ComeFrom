@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # $File: //member/autrijus/Acme-ComeFrom/t/1-basic.t $ $Author: autrijus $
-# $Revision: #4 $ $Change: 3587 $ $DateTime: 2002/03/29 13:59:48 $
+# $Revision: #1 $ $Change: 1 $ $DateTime: 2002/06/11 15:35:12 $
 
 use strict;
 use subs 'fork';

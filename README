@@ -1,5 +1,5 @@
 # $File: //member/autrijus/Acme-ComeFrom/README $ $Author: autrijus $
-# $Revision: #2 $ $Change: 2411 $ $DateTime: 2001/11/24 03:06:03 $
+# $Revision: #2 $ $Change: 8742 $ $DateTime: 2003/11/08 06:18:43 $
 
 This is the README file for Acme::ComeFrom, a source filter providing
 the "comefrom" construct, an INTERCAL-like parallel goto-in-reverse.
@@ -15,7 +15,7 @@ make install
 
 * Copyright
 
-Copyright 2001 by Autrijus Tang <autrijus@autrijus.org>.
+Copyright 2001, 2002, 2003 by Autrijus Tang <autrijus@autrijus.org>.
 
 All rights reserved.  You can redistribute and/or modify
 this bundle under the same terms as Perl itself.
