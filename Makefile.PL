@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # $File: //member/autrijus/Acme-ComeFrom/Makefile.PL $ $Author: autrijus $
-# $Revision: #2 $ $Change: 2402 $ $DateTime: 2001/11/23 12:01:54 $
+# $Revision: #3 $ $Change: 2411 $ $DateTime: 2001/11/24 03:06:03 $
 
 require 5.005;
 
@@ -17,6 +17,7 @@ WriteMakefile(
     PREREQ_PM       => {
 	'Filter::Simple'	=> '0.70',
 	'Hook::LexWrap'		=> '0.20',
+	'Test::More'		=> '0.11',
     },
 
     dist		=> {

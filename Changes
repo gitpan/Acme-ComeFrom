@@ -1,4 +1,27 @@
 ____________________________________________________________________________
+[  2411] By: autrijus                              on 2001/11/24  03:06:03
+        Log: * 0.04: corrected most of the pidgin POD, and s/goto/comefrom/ nits
+             * Keeps better track to multiple importing packages
+             * Skips over its own labels without outlawing U_nderscores:
+             * uses Test::More for testing
+             * added complete test cases.
+	   ! ComeFrom.pm Makefile.PL README t/ComeFrom.t
+____________________________________________________________________________
+[  2407] By: autrijus                              on 2001/11/23  12:23:22
+        Log: * thanks to schwern, ditched test.pl
+             * (see http://archive.develooper.com/perl-qa@perl.org/msg00783.html)
+	  +> t/ComeFrom.t
+	   - test.pl
+	   ! MANIFEST
+____________________________________________________________________________
+[  2406] By: autrijus                              on 2001/11/23  12:11:14
+        Log: * oops.
+	   ! ComeFrom.pm
+____________________________________________________________________________
+[  2405] By: autrijus                              on 2001/11/23  12:10:47
+        Log: changes.
+	   ! Changes
+____________________________________________________________________________
 [  2404] By: autrijus                              on 2001/11/23  12:09:44
         Log: * 0.03, the CPAN version. 0.02 doesn't even compile.
 	   ! ComeFrom.pm

@@ -1,11 +1,11 @@
 # $File: //member/autrijus/Acme-ComeFrom/ComeFrom.pm $ $Author: autrijus $
-# $Revision: #4 $ $Change: 2406 $ $DateTime: 2001/11/23 12:11:14 $
+# $Revision: #5 $ $Change: 2411 $ $DateTime: 2001/11/24 03:06:03 $
 
 package Acme::ComeFrom;
-$Acme::ComeFrom::VERSION = '0.03';
+$Acme::ComeFrom::VERSION = '0.04';
 
 use strict;
-use Filter::Simple 0.70;
+use Filter::Simple 0.70; # 0.75+ is preferred, though
 
 =head1 NAME
 
@@ -31,12 +31,13 @@ Acme::ComeFrom - Parallel goto-in-reverse
 
 =head1 DESCRIPTION
 
-INTERCAL programmers have been for a long time monopolized the enormously
+B<INTERCAL> programmers have for a long time monopolized the enormously
 powerful construct C<COME FROM>, both as a flow-control replacement to
-C<goto>, as well as an obvious way to mark parallel execution branches.
+C<goto>, and as a simple way to mark parallel execution branches in
+the multi-thread variant.
 
-But now, with B<Acme::ComeFrom>, perl hackers finally could match them on
-the front of wackiness, if not of obfuscation.
+But now, with B<Acme::ComeFrom>, we perl hackers could finally be on par
+with them in terms of wackiness, if not in obfuscation.
 
 Just like C<goto>, C<comefrom> comes in three different flavors:
 
@@ -45,9 +46,10 @@ Just like C<goto>, C<comefrom> comes in three different flavors:
 =item comefrom LABEL
 
 The C<comefrom-LABEL> form finds the statement labeled with LABEL and
-jumps to the C<comefrom> just I<before> that statement's execution.
-The C<comefrom> may not be within any construct that requires
-initialization, such as a subroutine or a C<foreach> loop.
+jumps to the C<comefrom> each time just I<before> that statement's
+execution.  The C<comefrom> may not be inside any construct that
+requires initialization, such as a subroutine or a C<foreach> loop,
+unless the targeting LABEL is also in the same construct.
 
 =item comefrom EXPR
 
@@ -56,10 +58,10 @@ resolved dynamically.  This allows for computed C<comefrom>s by
 checking the C<EXPR> before every labels (a.k.a. watchpoints), so
 you could write ($i evaluates in the LABEL's scope):
 
-    goto ("FOO", "BAR", "GLARCH")[$i];
+    comefrom ("FOO", "BAR", "GLARCH")[$i];
 
-Please note that the value of EXPR is frozen the first time it is
-checked. This behaviour might change in the future.
+Please note that the value of EXPR is frozen at the first time it is
+checked.  This behaviour might change in the future.
 
 =item comefrom &NAME
 
@@ -71,17 +73,20 @@ is made just I<after> the subroutine's execution.
 
 =back
 
-If two or more C<comefrom> applies to the same LABEL, EXPR or NAME,
-they will be executed simultaneously via C<fork()>. The parent process
-will receive the latest installed C<comefrom>.
+If two or more C<comefrom> were applied to the same LABEL, EXPR or NAME,
+they will be executed simultaneously via C<fork()>.  The forking are
+ordered by the occurrance of C<comefrom>s, with the parent process receiving
+the last one.
 
 =head1 BUGS
 
-To numerous to be counted. This is only a prototype version.
+To numerous to be counted; this is only a prototype version.
 
 =head1 ACKNOWLEDGEMENTS
 
-To the INTERCAL language, the endless inspiration. As its manual said:
+To the B<INTERCAL> language, for its endless inspiration.
+
+As its manual states:
 "The earliest known description of the COME FROM statement in the computing
 literature is in [R. L. Clark, "A linguistic contribution to GOTO-less
 programming," Commun. ACM 27 (1984), pp. 349-350], part of the famous April
@@ -90,22 +95,24 @@ the statement in their languages was underwhelming, one might even say
 nonexistent.  It was therefore decided that COME FROM would be an appropriate
 addition to C-INTERCAL."
 
-To Maestro Damian Conway, the source of all magic bits in the B<Hook::LexWrap>
-and B<Filter::Simple> modules, on which this module is based.
+To Maestro Damian Conway, the source of all magic bits in B<Hook::LexWrap>
+and B<Filter::Simple>, on which this module is based.
 
-To Ton Hospel, for his tolerance on my semantic hackeries, and suggesting the
-correct semantic of C<comefrom-LABEL> and C<comefrom-EXPR>.
+To Ton Hospel, for his tolerance on my semantic hackeries, and suggesting
+the correct behaviour of C<comefrom-LABEL> and C<comefrom-EXPR>.
 
 =cut
+
+my $Mark  = '__COME_FROM';
+my $count = "0000";
 
 FILTER_ONLY code => sub {
     my (%subs, %labs, @tokens, @counts);
     my $source = $_;
-    my $count = "0000";
 
     $_ = $source and return unless $source =~ /comefrom/;
 
-    while ($source =~ s/\bcomefrom\b\s*(&?)?([\w\:]+|[^\;]+)(?:\(\))?/__COME_FROM$count:/) {
+    while ($source =~ s/\bcomefrom\b\s*\(?(&?)?([\w\:]+|[^\;]+)(?:\(\))?\)?/$Mark$count:/) {
 	my $token = $2;
 
 	push @{$subs{$token}}, $count++ and next if $1;
@@ -125,14 +132,14 @@ FILTER_ONLY code => sub {
     }
 
     if (@tokens) {
-	$source =~ s!\n\s*([a-zA-Z_][a-zA-Z]\w+):!
+	$source =~ s!\n[\s\t]*([a-zA-Z_]\w+):!
 	    my $label = $1;
 	    my $chunk = makechunk(
 		[ @counts, exists $labs{$label} ? @{$labs{$label}} : ()],
 		$label, \@tokens
-	    );
+	    ) unless substr($label, 0, length($Mark)) eq $Mark;
 
-	    "$label: do { $chunk };"
+	    $chunk ? "\n$label: do { $chunk };" : "\n$label:";
 	!eg;
     }
     else {
@@ -150,32 +157,22 @@ sub makechunk {
     my ($v, $label, $cond) = @_;
     my $chunk = '';
 
-    foreach my $iter (0..$#{$v}-1) {
+    foreach my $iter (0 .. $#{$v}) {
+	my $fork = ($iter != $#{$v});
+
 	if (defined $cond->[$iter]) {
 	    $chunk .= qq{
-		$pkg\::CACHE[$v->[$iter]]
-		    = eval q;$cond->[$iter]; unless exists $pkg\::CACHE[$v->[$iter]];
+		$pkg\::CACHE[$v->[$iter]] = eval q;$cond->[$iter];
+		    unless exists $pkg\::CACHE[$v->[$iter]];
 
-		goto __COME_FROM$v->[$iter] unless
-		    ('$label' ne $pkg\::CACHE[$v->[$iter]]) or fork;
-	    };
+		goto $Mark$v->[$iter] unless
+		    ('$label' ne $pkg\::CACHE[$v->[$iter]])
+	    } . ($fork ? " or fork;" : ';');
 	}
 	else {
-	    $chunk .= "goto __COME_FROM$v->[$iter] unless fork;";
+	    $chunk .= "goto $Mark$v->[$iter]"
+		    . ($fork ? " unless fork;" : ';');
 	}
-    }
-
-    if (defined $cond->[$#{$v}]) {
-	$chunk .= qq{
-	    $pkg\::CACHE[$v->[-1]]
-		= eval q;$cond->[$#{$v}-1]; unless exists $pkg\::CACHE[$v->[-1]];
-
-	    goto __COME_FROM$v->[-1] unless
-		('$label' ne $pkg\::CACHE[$v->[-1]]);
-	};
-    }
-    else {
-	$chunk .= "goto __COME_FROM$v->[-1];";
     }
 
     return $chunk;

@@ -3,4 +3,4 @@ MANIFEST
 Makefile.PL
 ComeFrom.pm
 README
-test.pl
+t/ComeFrom.t
