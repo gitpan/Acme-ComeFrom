@@ -1,11 +1,12 @@
 #!/usr/bin/perl -w
-# $File: //member/autrijus/Acme-ComeFrom/t/ComeFrom.t $ $Author: autrijus $
-# $Revision: #2 $ $Change: 2411 $ $DateTime: 2001/11/24 03:06:03 $
+# $File: //member/autrijus/Acme-ComeFrom/t/1-basic.t $ $Author: autrijus $
+# $Revision: #2 $ $Change: 2431 $ $DateTime: 2001/11/26 10:59:24 $
 
 use strict;
 use subs 'fork';
-use Test::More tests => 7;
-BEGIN { use_ok('Acme::ComeFrom') };
+use Test::More tests => 8;
+
+BEGIN { use_ok('Acme::ComeFrom') }
 
 sub OK  { ok(1, "comefrom @_") }
 sub NOK { ok(0, "comefrom @_") }
@@ -37,13 +38,26 @@ sub {				# different scope now
     }
 }->();
 
-comefrom(expr0);		# this causes fork
+comefrom(expr0);		# this causes a fork
 
 no Acme::ComeFrom;		# removes filtering
 normal: OK('(disabled)');	# this will run
 
 if ($] eq "Perl") {		# the glory!
     NOK('(disabled)')		# but this will not
+}
+
+use Acme::ComeFrom;		# instantialize it agian
+
+{
+    my $i = 0;
+
+    dumm0: 0;			# increases $i
+    expr1: NOK('uncached EXPR');
+    if ($] eq "Parrot") {	# yikes
+	comefrom 'expr'.$i++;	# coming from expr1:
+	OK('uncached EXPR');	# and OKs the test
+    }
 }
 
 __END__

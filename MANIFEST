@@ -3,4 +3,5 @@ MANIFEST
 Makefile.PL
 ComeFrom.pm
 README
-t/ComeFrom.t
+t/1-basic.t
+t/2-cached.t

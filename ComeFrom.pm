@@ -1,11 +1,12 @@
 # $File: //member/autrijus/Acme-ComeFrom/ComeFrom.pm $ $Author: autrijus $
-# $Revision: #5 $ $Change: 2411 $ $DateTime: 2001/11/24 03:06:03 $
+# $Revision: #7 $ $Change: 2432 $ $DateTime: 2001/11/26 11:06:25 $
 
 package Acme::ComeFrom;
-$Acme::ComeFrom::VERSION = '0.04';
+$Acme::ComeFrom::VERSION = '0.05';
 
 use strict;
-use Filter::Simple 0.70; # 0.75+ is preferred, though
+use vars qw/$CacheEXPR/;
+use Filter::Simple 0.70;
 
 =head1 NAME
 
@@ -25,7 +26,7 @@ Acme::ComeFrom - Parallel goto-in-reverse
 
     comefrom label; print "branch 2.1\n"; exit;
     comefrom label; print "branch 2.2\n";
-    
+
     expr0: print "to be\n"; exit;
     comefrom "expr".int(rand(2)); print "not to be\n";
 
@@ -60,8 +61,11 @@ you could write ($i evaluates in the LABEL's scope):
 
     comefrom ("FOO", "BAR", "GLARCH")[$i];
 
-Please note that the value of EXPR is frozen at the first time it is
-checked.  This behaviour might change in the future.
+Starting from version 0.05, the value of EXPR is evaluated each
+time, instead of the old 'frozen at the first check' behaviour.  If
+this breaks your code -- as if there's any code based on comefrom --
+You may retain the original behaviour by assigning a true value
+to C<$Acme::ComeFrom::CacheEXPR>.
 
 =item comefrom &NAME
 
@@ -75,31 +79,14 @@ is made just I<after> the subroutine's execution.
 
 If two or more C<comefrom> were applied to the same LABEL, EXPR or NAME,
 they will be executed simultaneously via C<fork()>.  The forking are
-ordered by the occurrance of C<comefrom>s, with the parent process receiving
+ordered by their occurrances, with the parent process receiving
 the last one.
 
 =head1 BUGS
 
-To numerous to be counted; this is only a prototype version.
-
-=head1 ACKNOWLEDGEMENTS
-
-To the B<INTERCAL> language, for its endless inspiration.
-
-As its manual states:
-"The earliest known description of the COME FROM statement in the computing
-literature is in [R. L. Clark, "A linguistic contribution to GOTO-less
-programming," Commun. ACM 27 (1984), pp. 349-350], part of the famous April
-Fools issue of CACM. The subsequent rush by language designers to include
-the statement in their languages was underwhelming, one might even say
-nonexistent.  It was therefore decided that COME FROM would be an appropriate
-addition to C-INTERCAL."
-
-To Maestro Damian Conway, the source of all magic bits in B<Hook::LexWrap>
-and B<Filter::Simple>, on which this module is based.
-
-To Ton Hospel, for his tolerance on my semantic hackeries, and suggesting
-the correct behaviour of C<comefrom-LABEL> and C<comefrom-EXPR>.
+This module does not really parse perl; it guesses label names quite
+accurately, but the regex matching the C<comefrom> itself could catch
+many false-positives. I'm looking forward for ways to change that.
 
 =cut
 
@@ -161,13 +148,21 @@ sub makechunk {
 	my $fork = ($iter != $#{$v});
 
 	if (defined $cond->[$iter]) {
-	    $chunk .= qq{
-		$pkg\::CACHE[$v->[$iter]] = eval q;$cond->[$iter];
-		    unless exists $pkg\::CACHE[$v->[$iter]];
+	    my $forktext = ($fork ? " or fork" : '');
 
-		goto $Mark$v->[$iter] unless
-		    ('$label' ne $pkg\::CACHE[$v->[$iter]])
-	    } . ($fork ? " or fork;" : ';');
+	    $chunk .= "
+		if (\$Acme::ComeFrom::CacheEXPR) {
+		    $pkg\::CACHE[$v->[$iter]] = eval q;$cond->[$iter];
+			unless exists $pkg\::CACHE[$v->[$iter]];
+
+		    goto $Mark$v->[$iter] unless
+			('$label' ne $pkg\::CACHE[$v->[$iter]])$forktext;
+		}
+		else {
+		    goto $Mark$v->[$iter] unless
+			('$label' ne eval q;$cond->[$iter];)$forktext;
+		}
+	    ";
 	}
 	else {
 	    $chunk .= "goto $Mark$v->[$iter]"
@@ -179,6 +174,29 @@ sub makechunk {
 }
 
 1;
+
+=head1 ACKNOWLEDGEMENTS
+
+To the B<INTERCAL> language, for its endless inspiration.
+
+As its manual states:
+"The earliest known description of the COME FROM statement in the computing
+literature is in [R. L. Clark, "A linguistic contribution to GOTO-less
+programming," Commun. ACM 27 (1984), pp. 349-350], part of the famous April
+Fools issue of CACM. The subsequent rush by language designers to include
+the statement in their languages was underwhelming, one might even say
+nonexistent.  It was therefore decided that COME FROM would be an appropriate
+addition to C-INTERCAL."
+
+To Maestro Damian Conway, the source of all magic bits in B<Hook::LexWrap>
+and B<Filter::Simple>, on which this module is based.
+
+To Ton Hospel, for his tolerance on my semantic hackeries, and suggesting
+the correct behaviour of C<comefrom-LABEL> and C<comefrom-EXPR>.
+
+=head1 SEE ALSO
+
+L<Hook::LexWrap>, L<Filter::Simple>, L<perlfunc/goto>.
 
 =head1 AUTHORS
 

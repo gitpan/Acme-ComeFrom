@@ -1,4 +1,29 @@
 ____________________________________________________________________________
+[  2432] By: autrijus                              on 2001/11/26  11:06:25
+        Log: * This be ComeFrom.pm 0.05.
+             * more pod nits.
+	   ! ComeFrom.pm
+____________________________________________________________________________
+[  2431] By: autrijus                              on 2001/11/26  10:59:24
+        Log: * pointless test nits.
+	   ! t/1-basic.t t/2-cached.t
+____________________________________________________________________________
+[  2414] By: autrijus                              on 2001/11/24  05:53:02
+        Log: * rename the test.
+	  +> t/1-basic.t
+	   - t/ComeFrom.t
+____________________________________________________________________________
+[  2413] By: autrijus                              on 2001/11/24  05:51:45
+        Log: * per Ton Hospel's request, revert the cached EXPR feature.
+             * add $Acme::ComeFrom::CacheEXPR flag to specify old behaviour.
+             * add corresponding test.
+	   + t/2-cached.t
+	   ! ComeFrom.pm t/ComeFrom.t
+____________________________________________________________________________
+[  2412] By: autrijus                              on 2001/11/24  03:08:06
+        Log: * changes.
+	   ! Changes
+____________________________________________________________________________
 [  2411] By: autrijus                              on 2001/11/24  03:06:03
         Log: * 0.04: corrected most of the pidgin POD, and s/goto/comefrom/ nits
              * Keeps better track to multiple importing packages
