@@ -1,10 +1,10 @@
 #!/usr/bin/perl -w
 # $File: //member/autrijus/Acme-ComeFrom/t/1-basic.t $ $Author: autrijus $
-# $Revision: #2 $ $Change: 2431 $ $DateTime: 2001/11/26 10:59:24 $
+# $Revision: #4 $ $Change: 3587 $ $DateTime: 2002/03/29 13:59:48 $
 
 use strict;
 use subs 'fork';
-use Test::More tests => 8;
+use Test::More tests => $] >= 5.007 ? 6 : 8;
 
 BEGIN { use_ok('Acme::ComeFrom') }
 

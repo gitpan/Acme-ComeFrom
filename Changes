@@ -1,4 +1,28 @@
 ____________________________________________________________________________
+[  3587] By: autrijus                              on 2002/03/29  13:59:48
+        Log: * remedy.
+	   ! t/1-basic.t
+____________________________________________________________________________
+[  3586] By: autrijus                              on 2002/03/29  13:55:17
+        Log: * This be 0.06.
+	   ! ComeFrom.pm
+____________________________________________________________________________
+[  3385] By: autrijus                              on 2002/03/08  16:39:46
+        Log: * oops, test number wrong.
+	   ! t/1-basic.t
+____________________________________________________________________________
+[  2472] By: autrijus                              on 2001/11/29  13:42:58
+        Log: * very minor nits.
+	   ! ComeFrom.pm
+____________________________________________________________________________
+[  2434] By: autrijus                              on 2001/11/26  11:09:44
+        Log: * fix tests in manifest.
+	   ! MANIFEST
+____________________________________________________________________________
+[  2433] By: autrijus                              on 2001/11/26  11:07:41
+        Log: * changes.
+	   ! Changes
+____________________________________________________________________________
 [  2432] By: autrijus                              on 2001/11/26  11:06:25
         Log: * This be ComeFrom.pm 0.05.
              * more pod nits.
@@ -15,7 +39,8 @@ ____________________________________________________________________________
 ____________________________________________________________________________
 [  2413] By: autrijus                              on 2001/11/24  05:51:45
         Log: * per Ton Hospel's request, revert the cached EXPR feature.
-             * add $Acme::ComeFrom::CacheEXPR flag to specify old behaviour.
+             * add $Acme::ComeFrom::CacheEXPR flag to specify old
+	     behaviour.
              * add corresponding test.
 	   + t/2-cached.t
 	   ! ComeFrom.pm t/ComeFrom.t
@@ -25,7 +50,8 @@ ____________________________________________________________________________
 	   ! Changes
 ____________________________________________________________________________
 [  2411] By: autrijus                              on 2001/11/24  03:06:03
-        Log: * 0.04: corrected most of the pidgin POD, and s/goto/comefrom/ nits
+        Log: * 0.04: corrected most of the pidgin POD, and s/goto/comefrom/
+	     nits
              * Keeps better track to multiple importing packages
              * Skips over its own labels without outlawing U_nderscores:
              * uses Test::More for testing
@@ -34,7 +60,8 @@ ____________________________________________________________________________
 ____________________________________________________________________________
 [  2407] By: autrijus                              on 2001/11/23  12:23:22
         Log: * thanks to schwern, ditched test.pl
-             * (see http://archive.develooper.com/perl-qa@perl.org/msg00783.html)
+             * (see
+	     http://archive.develooper.com/perl-qa@perl.org/msg00783.html)
 	  +> t/ComeFrom.t
 	   - test.pl
 	   ! MANIFEST

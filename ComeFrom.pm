@@ -1,8 +1,8 @@
 # $File: //member/autrijus/Acme-ComeFrom/ComeFrom.pm $ $Author: autrijus $
-# $Revision: #7 $ $Change: 2432 $ $DateTime: 2001/11/26 11:06:25 $
+# $Revision: #9 $ $Change: 3586 $ $DateTime: 2002/03/29 13:55:17 $
 
 package Acme::ComeFrom;
-$Acme::ComeFrom::VERSION = '0.05';
+$Acme::ComeFrom::VERSION = '0.06';
 
 use strict;
 use vars qw/$CacheEXPR/;
@@ -11,6 +11,11 @@ use Filter::Simple 0.70;
 =head1 NAME
 
 Acme::ComeFrom - Parallel goto-in-reverse
+
+=head1 VERSION
+
+This document describes version 0.06 of Acme::ComeFrom, released
+March 30, 2002.
 
 =head1 SYNOPSIS
 
@@ -56,7 +61,7 @@ unless the targeting LABEL is also in the same construct.
 
 The C<comefrom-EXPR> form expects a label name, whose scope will be
 resolved dynamically.  This allows for computed C<comefrom>s by
-checking the C<EXPR> before every labels (a.k.a. watchpoints), so
+checking the C<EXPR> before every label (a.k.a. watchpoints), so
 you could write ($i evaluates in the LABEL's scope):
 
     comefrom ("FOO", "BAR", "GLARCH")[$i];
@@ -72,8 +77,8 @@ to C<$Acme::ComeFrom::CacheEXPR>.
 The C<comefrom-&NAME> form is quite different from the other forms of
 C<comefrom>.  In fact, it isn't a comefrom in the normal sense at all,
 and doesn't have the stigma associated with other C<comefrom>s.  Instead,
-it installs a post-processing handler for the subroutine, so a jump
-is made just I<after> the subroutine's execution.
+it installs a post-processing handler for the subroutine, and a jump
+would be made just I<after> the subroutine's execution.
 
 =back
 
@@ -91,7 +96,7 @@ many false-positives. I'm looking forward for ways to change that.
 =cut
 
 my $Mark  = '__COME_FROM';
-my $count = "0000";
+my $count = '0000';
 
 FILTER_ONLY code => sub {
     my (%subs, %labs, @tokens, @counts);
@@ -196,7 +201,7 @@ the correct behaviour of C<comefrom-LABEL> and C<comefrom-EXPR>.
 
 =head1 SEE ALSO
 
-L<Hook::LexWrap>, L<Filter::Simple>, L<perlfunc/goto>.
+L<Hook::LexWrap>, L<Filter::Simple>, L<perlfunc/goto>
 
 =head1 AUTHORS
 
