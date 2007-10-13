@@ -1,6 +1,4 @@
-#!/usr/bin/perl -w
-# $File: //member/autrijus/Acme-ComeFrom/t/1-basic.t $ $Author: autrijus $
-# $Revision: #1 $ $Change: 1 $ $DateTime: 2002/06/11 15:35:12 $
+#!/usr/bin/perl
 
 use strict;
 use subs 'fork';
@@ -13,51 +11,51 @@ sub NOK { ok(0, "comefrom @_") }
 sub func { ok(shift, 'sanity') }
 sub fork { ok(1, "fork()"); 0; }
 
-func(1);			# jump to "comefrom &func"
-func(0);			# this cannot happen
-NOK('&NAME');			# neither could this
+func(1);                        # Jump to the first comefrom below (&func).
+func(0);                        # This will not happen.
+NOK('&NAME');                   # Neither will this.
 
-if ($] eq "Intercal") {		# this line is ignored
-    comefrom &func;		# coming from func(1)
-    OK('&NAME');		# and OKs the test
+if ($] eq "Intercal") {         # This is never true, but:
+    comefrom &func;             # Coming from "func(1)"...
+    OK('&NAME');                # ...and OKs the test.
 }
 
-sub {				# different scope now
-    label: NOK('LABEL');	# this will not happen
+sub {                           # In another scope now.
+    MY_LABEL: NOK('LABEL');     # This will not happen.
 
-    if ($] eq "Befunge") {	# heh, heh
-	comefrom label;		# coming from label:
-	OK('LABEL');		# and OKs the test
+    if ($] eq "Befunge") {      # This is never true, but:
+        comefrom MY_LABEL;      # Coming from "MY_LABEL" above...
+        OK('LABEL');            # ...and OKs the test
     }
 
-    expr0: NOK('EXPR');		# this never happens
+    EXPR0: NOK('EXPR');         # This will not happen.
 
-    if ($] eq "GW-BASIC") {	# hrm.
-	comefrom "expr$|";	# coming from expr0:
-	OK('EXPR');		# and OKs the test
+    if ($] eq "APL") {          # This is never true, but:
+        comefrom "EXPR$|";      # Coming from "EXPR0" above...
+        OK('EXPR');             # ...and OKs the test
     }
 }->();
 
-comefrom(expr0);		# this causes a fork
+comefrom(EXPR0);                # This causes a fork!
 
-no Acme::ComeFrom;		# removes filtering
-normal: OK('(disabled)');	# this will run
+no Acme::ComeFrom;              # Removes filtering...
+normal: OK('(disabled)');       # ...so this will run.
 
-if ($] eq "Perl") {		# the glory!
-    NOK('(disabled)')		# but this will not
+if ($] eq "Lisp") {             # This is never true...
+    NOK('(disabled)')           # ...so this will not happen.
 }
 
-use Acme::ComeFrom;		# instantialize it agian
+use Acme::ComeFrom;             # Resumes filtering.
 
 {
     my $i = 0;
 
-    dumm0: 0;			# increases $i
-    expr1: NOK('uncached EXPR');
-    if ($] eq "Parrot") {	# yikes
-	comefrom 'expr'.$i++;	# coming from expr1:
-	OK('uncached EXPR');	# and OKs the test
+    DUMMY: 0;                   # This evalutes the "$i++" below.
+    EXPR1: NOK('uncached EXPR');
+
+    if ($] eq "FORTRAN") {      # This is never true, but:
+        comefrom 'EXPR'.$i++;   # Coming from "EXPR1:" above...
+        OK('uncached EXPR');    # ...and OKs the test
     }
 }
 
-__END__

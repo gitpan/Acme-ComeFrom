@@ -1,17 +1,15 @@
-____________________________________________________________________________
-[  8742] By: autrijus                              on 2003/11/08  06:18:43
-        Log: * This be 0.07.
-             * Modernise distribution format.
-	   + t/0-signature.t
-	  +> lib/Acme/ComeFrom.pm
-	   - ComeFrom.pm
-	   ! MANIFEST Makefile.PL README t/1-basic.t
-	   ! t/2-cached.t
-____________________________________________________________________________
-[  8513] By: autrijus                              on 2003/10/20  23:44:16
-        Log: * switch to use inc::Module::Install. 
-	   ! MANIFEST Makefile.PL
-____________________________________________________________________________
-[  7252] By: autrijus                              on 2003/07/30  06:48:00
-        Log: * switch to Module::Install
-	   ! MANIFEST Makefile.PL
+[Changes for 0.10 - 2007-10-14]
+
+* LICENSING CHANGE: This compilation and all individual files in it
+  (except for the bundled libsyck code) are now under the permissive
+  "MIT" license.
+
+* Line numbers are now preserved after filtering.
+
+* The unit test no longer breaks under recent versions of Filter::Simple.
+
+* Tidied up source code, test files, and this changelog.
+
+[Changes for 0.07 - 2003-11-08]
+
+* Switch build infrastructure to Module::Install.
