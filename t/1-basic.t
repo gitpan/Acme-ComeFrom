@@ -2,7 +2,7 @@
 
 use strict;
 use subs 'fork';
-use Test::More tests => $] >= 5.007 ? 6 : 8;
+use Test::More tests => 6;
 
 BEGIN { use_ok('Acme::ComeFrom') }
 

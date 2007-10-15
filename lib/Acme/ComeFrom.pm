@@ -1,5 +1,5 @@
 package Acme::ComeFrom;
-$Acme::ComeFrom::VERSION = '0.10';
+$Acme::ComeFrom::VERSION = '0.11';
 
 use 5.005;
 use strict;
@@ -105,8 +105,8 @@ Acme::ComeFrom - Parallel Goto-in-reverse
 
 =head1 VERSION
 
-This document describes version 0.10 of Acme::ComeFrom, released
-October 14, 2007.
+This document describes version 0.11 of Acme::ComeFrom, released
+October 15, 2007.
 
 =head1 SYNOPSIS
 

@@ -1,8 +1,11 @@
+[Changes for 0.11 - 2007-10-15]
+
+* Correct test counts for Perl versions earlier than 5.7.
+
 [Changes for 0.10 - 2007-10-14]
 
 * LICENSING CHANGE: This compilation and all individual files in it
-  (except for the bundled libsyck code) are now under the permissive
-  "MIT" license.
+  are now under the permissive "MIT" license.
 
 * Line numbers are now preserved after filtering.
 
